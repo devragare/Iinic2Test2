@@ -1,16 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { MyApp } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
+import { RedditProvider } from '../providers/reddit/reddit';
+import { DataProvider } from '../providers/data/data';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Keyboard } from '@ionic-native/keyboard';
-
-import { MyApp } from './app.component';
-import { DataProvider } from '../providers/data/data';
-import { RedditProvider } from '../providers/reddit/reddit';
 
 
 @NgModule({
@@ -19,20 +18,22 @@ import { RedditProvider } from '../providers/reddit/reddit';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    HttpModule,
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider,
+    RedditProvider,
+    SplashScreen,
+    StatusBar,
     InAppBrowser,
     Keyboard,
-    RedditProvider
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}
